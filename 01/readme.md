@@ -121,3 +121,32 @@ git push github dev
 # 第二次提交
 git push
 ```
+
+
+5. 克隆项目
+
+在一台新设备上 完全没有项目的情况下 可以克隆(clone 复制)项目
+
+git clone 仓库地址
+```shell
+git clone https://github.com/weblemon/web1911-04.git
+```
+
+克隆的项目 默认的远程仓库名称 叫origin（原始仓库） 
+远程仓库的地址 默认是当前克隆的地址
+
+使用命令查看当前的仓库
+
+
+获取仓库的地址
+git remote get-url <仓库名称>
+
+```shell
+# 查看当前的仓库列表
+git remote
+> origin
+
+# 获取当前仓库的地址
+git remote get-url origin
+> https://github.com/weblemon/web1911-04.git
+```
