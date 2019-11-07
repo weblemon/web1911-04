@@ -54,3 +54,4 @@ git branch -D <name>
 git chekcout  <branchName>
 ```
 
+8. 测试
