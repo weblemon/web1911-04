@@ -151,6 +151,12 @@ git remote get-url origin
 > https://github.com/weblemon/web1911-04.git
 ```
 
+-f 强制覆盖记录
+不要在公司的项目中操作这个命令 否则你要被xxxx
+```shell
+git push -f
+```
+
 
 7. 同步远程仓库
 
@@ -173,4 +179,24 @@ hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
 hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+
+在修改代码之前 先同步然后在修改
+如果提交时 和远程仓库不同步 也是先同步拉取 然后在提交
+
+
+8. 下载主分支以外的其他分支
+
+主分支已经克隆好了，想要下载dev开发分支
+在这里使用fetch命令
+
+git fetch <仓库名称> <远程分支名称>:<本地分支名称> 中间使用冒号隔开
+`远程分支名称`可以和`本地分支名称`不同名 建议使用相同的名称 免得项目管理起来混乱
+
+```shell
+git fetch github dev:dev
+# github 是仓库名称
+# 冒号前面的dev是远程仓库的dev分支代码
+# 冒号后面的dev是下载到本地仓库时叫什么名
 ```
