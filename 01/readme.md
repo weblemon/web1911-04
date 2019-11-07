@@ -53,4 +53,3 @@ git branch -D <name>
 ```shell
 git chekcout  <branchName>
 ```
-
