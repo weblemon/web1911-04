@@ -27,3 +27,28 @@ git add <文件路径|文件夹路径>
 ```shell
 git commit -m "描述"
 ```
+
+
+4. 查看分支
+
+```shell
+git branch
+```
+
+5. 创建分支
+
+```shell
+git branch <name>
+```
+
+6. 删除分支
+```shell
+git branch -D <name>
+```
+
+7. 切换分支
+
+```shell
+git chekcout  <branchName>
+```
+
