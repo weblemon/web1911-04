@@ -200,3 +200,16 @@ git fetch github dev:dev
 # 冒号前面的dev是远程仓库的dev分支代码
 # 冒号后面的dev是下载到本地仓库时叫什么名
 ```
+
+
+```shell
+ssh-keygen -t rsa -C "849291425@qq.com"
+Generating public/private rsa key pair.
+# 输入你要生成的秘钥文件叫什么名称
+# 默认叫id_rsa 输入完按回车
+Enter file in which to save the key (C:\Users\RanYunlong/.ssh/id_rsa):
+# 输入一个秘钥的密码
+Enter passphrase (empty for no passphrase):
+# 重复输入密码
+Enter same passphrase again:
+```
