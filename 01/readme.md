@@ -41,6 +41,8 @@ git branch
 git branch <name>
 ```
 
+在哪个分支上使用branch 创建分支 就是从这个分支上复制一个新的副本
+
 6. 删除分支
 ```shell
 git branch -D <name>
