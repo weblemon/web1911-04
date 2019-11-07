@@ -59,3 +59,65 @@ git chekcout  <branchName>
 ```shell
 git merge <otherBranch>
 ```
+
+9. 配置参数
+
+```shell
+# --global 可以不写 以后每次创建仓库都需要在配置一遍
+# --global 加上后 以后的所有项目默认用这两个参数
+git config --global user.email "填入你的邮箱地址"
+git config --global user.name "姓名"
+```
+
+
+## 远程仓库
+
+1. github 这个免费托管代码的网站
+[github](https://github.com/)
+
+支持两种模式的仓库
+- Public 每个人都可以访问 和复制 不可以修改
+- Private 未经过允许的用户不能访问 和复制 以及修改
+
+2. gitlab 需要自己公司搭建
+3. 阿里云 腾讯 收费的私有仓库
+4. gitee 码云 免费
+
+
+1. 在本地添加一个远程仓库的地址
+git remote add <仓库名称> <仓库地址>
+```shell
+git remote add github https://github.com/weblemon/web1911-04.git
+# github 是仓库名称
+# https://github.com/weblemon/web1911-04.git 是仓库地址
+```
+
+2. 查询当前有哪些远程仓库
+```shell
+git remote
+```
+
+3. 删除远程仓库
+git remote remove <仓库名称>
+```shell
+git remote remove github
+```
+
+4. 上传代码到远程仓库
+
+git push <仓库名称> <分支名称>
+
+```shell
+git push github dev
+```
+
+5. 绑定默认分支
+
+git push -u <仓库名称> <分支名称>
+```shell
+# 第一次绑定
+git push github dev
+
+# 第二次提交
+git push
+```
