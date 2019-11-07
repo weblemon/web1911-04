@@ -53,3 +53,9 @@ git branch -D <name>
 ```shell
 git chekcout  <branchName>
 ```
+
+8. 合并分支
+
+```shell
+git merge <otherBranch>
+```
