@@ -54,4 +54,8 @@ git branch -D <name>
 git chekcout  <branchName>
 ```
 
-8. 测试
+8. 合并分支
+
+```shell
+git merge <otherBranch>
+```
