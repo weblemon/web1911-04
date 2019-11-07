@@ -160,3 +160,17 @@ git pull
 ```shell
 git pull
 ```
+
+在提交代码到远程仓库时 如果本地和远程仓库不同步的话 会报错
+
+```shell
+git push
+To https://github.com/weblemon/web1911-04.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/weblemon/web1911-04.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
