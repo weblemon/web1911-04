@@ -123,7 +123,7 @@ git push
 ```
 
 
-5. 克隆项目
+6. 克隆项目
 
 在一台新设备上 完全没有项目的情况下 可以克隆(clone 复制)项目
 
@@ -149,4 +149,14 @@ git remote
 # 获取当前仓库的地址
 git remote get-url origin
 > https://github.com/weblemon/web1911-04.git
+```
+
+
+7. 同步远程仓库
+
+拉取同步
+git pull
+
+```shell
+git pull
 ```
