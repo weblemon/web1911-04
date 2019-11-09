@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3. v-model指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 
+            插值表达式是单向的
+            通过模板 可以展示绑定的变量
+         -->
+        <h1>{{title}}</h1>
+
+        <!-- 
+            v-model指令可以使用在任意表单元素上 
+            双向绑定数据 
+            通过模板 可以展示绑定的变量 也可以修改绑定的变量
+        -->
+        <input type="text" v-model="title" >
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el: "#root",
+
+            // 在vue实例中data 直接写成对象就好了
+            data: {
+                title: "第一次使用双向绑定",
+            }
+        });
+    </script>
+</body>
+</html>

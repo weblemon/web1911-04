@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5.v-for指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- <ul>
+            <li v-for="(value, index) in users">{{value}} ---- {{index}}</li>
+        </ul> -->
+
+        <ul>
+            <li v-for="(value, key) in objUser">{{value}} ---- {{key}}</li>
+        </ul>
+        
+
+        <ul>
+            <!-- <li v-for="(value, index) in objusers"> -->
+                <!-- <div>姓名: {{value.name}}</div> -->
+                <!-- <div>年龄: {{value.age}}</div> -->
+                <!-- {{value}} --- {{index}} -->
+                <!-- {{value}} -->
+                <!-- <div v-for="(item, key) in value">{{item}} --- {{key}}</div> -->
+            <!-- </li> -->
+        </ul>
+    </div>
+    
+    <script>
+
+        // [].forEach((value, index, arr) => {
+
+        // })
+
+
+        // vue的数据是响应式的
+        // 响应式就是数据和模板是绑定的关系
+        // 当是对象的结构 现有的成员默认是绑定关系 当发生变化 模板也会变化
+        // 新增成员 不支持对象的直接访问 如果直接访问生成拦截器
+
+        // 数组 可以使用数组的任意方法触发模板更新
+        // 数组 不可以使用下标的方式去新增成员 否则无法触发模板的更新
+        // vue修改了数组的方法 （变异方法）
+
+
+        // 注意点
+        // 1. 对象新增的成员不是响应式的（没有getter和setter）需要使用Vue.set 或者vm.$set方法来让对象的新成员是一个getter&setter拦截器
+
+        // 2. 数组可以使用任意的方法来触发模板的更新 不能使用下标的方式
+
+        // 在新增数据时 数组避免使用下标去新增数据 对象避免使用key去新增成员
+        // 数组尽量使用方法 对象尽量使用Vue.set 或者vm.$set
+
+
+        // 要动态删除对象的成员
+
+        // 可以使用Vue.delete(target, key)方法 来删除
+        // 1. target 带有拦截器的目标对象
+        // 2. key 带有拦截器的成员
+        // 不要去使用对象的delete关键字来删除 因为它不能触发模板更新
+
+        // Vue.delete === vm.$delete
+
+
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                users: [
+                    "张三",
+                    "李四"
+                ],
+                objUser: {
+                    name: "张三",
+                    age: 20
+                },
+                objusers: [
+                    {
+                        name: "张三",
+                        age: 20
+                    },
+                    {
+                        name: "李四",
+                        age: 21
+                    }
+                ]
+            }
+        });
+    
+        // console.log(vm.$set === Vue.set)
+        // Vue.set(target, key, value)
+        // vm.$set(target, key, value)
+        // 1. target 要添加拦截器的目标对象
+        // 2. key 给target的哪一个对象添加拦截方法
+        // 3. key的value值
+    </script>
+</body>
+</html>

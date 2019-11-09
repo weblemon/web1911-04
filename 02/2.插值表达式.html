@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2.插值表达式</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 模板 View -->
+        <h1>{{title}}</h1>
+        <p>{{content}}</p>
+        100 * {{num}}=<span>{{num * 100}}</span>
+        <div>
+            三目表达式 {{num >= 100 ? num : "小于100"}}
+        </div>
+    </div>
+
+    <!-- 
+        插值表达式 是一个单向绑定的模式
+
+        表达式绑定了实例中的变量，当实例中的变量发生改变 表达式会重新计算展示
+
+     -->
+    
+    <script>
+        // 初始化实例一个vue对象
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                title: "插值表达式的内容",
+                content: "这里是一些内容",
+                num: 100,
+            }
+        });
+
+    </script>
+</body>
+</html>

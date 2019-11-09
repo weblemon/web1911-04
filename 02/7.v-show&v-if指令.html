@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>7.v-show&v-if指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <button v-on:click="show">显示</button>
+        <button v-on:click="hide">隐藏</button>
+
+        <button v-on:click="toggle">切换</button>
+        <button v-on:click="isShow=!isShow">切换2</button>
+
+        <!-- 
+            v-show="boolean"
+            v-if="boolean"
+            当值为true 时 元素显示
+            当值为false是 元素隐藏
+
+            v-show的原理是给元素添加css的 display属性来实现的
+            v-if的原理是直接给当前元素从dom中移除
+        -->
+        
+        
+        <div class="box" v-show="isShow">
+
+        </div>
+
+        <div class="box" v-if="isShow"></div>
+
+
+        <!-- 
+            支持条件判断
+            不要在中间夹杂其他标签 否则会出现错误
+
+            // 错误方式
+            <div v-if="num == 1">现在的值为1</div>
+            <span>不能在中间夹杂 否则会影响vue的模板编译功能</span>
+            <div v-else-if="num == 2">现在的值为2</div>
+        -->
+        <!-- <div v-if="num == 1">现在的值为1</div>
+        <div v-else-if="num == 2">现在的值为2</div>
+        <div v-else>现在的值不是1或者2</div> -->
+        
+        
+        <!-- <input type="text" v-model="num"> -->
+
+        <ul>
+            <!-- 
+
+                v-if 在隐藏的时候 不会去创建dom元素
+                v-show 在隐藏的时候 会去创建dom元素（虽然不显示）
+
+             -->
+            <li v-for="i in 100000" v-show="false">{{i}}</li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                isShow: true,
+                num: "1",
+            },
+            methods: {
+                show() {
+                    this.isShow = true
+                },
+                hide() {
+                    this.isShow = false
+                },
+                toggle() {
+                    this.isShow = !this.isShow
+                }
+            },
+        })
+    
+    </script>
+</body>
+</html>

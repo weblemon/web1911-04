@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>6.v-on指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>{{title}}</h1>
+        <!-- v-on 后面跟html原生的事件即可 -->
+        <button v-on:click="clickFn('xxx')">click</button>
+        <button v-on:mousemove="moveFn">move</button>
+
+        <!-- <span>{{create()}}</span> -->
+
+        <ul>
+            <!-- 在vue里 如果事件的处理函数带了括号
+                要想获取原生的html 事件event对象
+                必须使用$event来注入参数到处理函数中
+            -->
+            <li v-on:click="clickFn($event, value, index )" v-for="(value, index) in list">{{value}}</li>
+        </ul>
+    </div>
+
+
+    <!-- 
+        v-on 指令
+
+        v-on:事件名称
+
+        v-on:click="处理函数"
+
+
+        处理函数两种使用方法
+        1. 在模板中处理函数的调用不带括号 那么在处理函数中可以收到1个event对象参数
+        2. 在模板中处理函数的调用带括号 如果需要event对象参数 必须使用$event关键字来注入参数
+
+        在模板中 事件处理函数的调用括号里 可以传递模板中任意可以访问到的变量
+        在处理函数中 可以访问当前实例的所有成员
+     -->
+    
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                title: "标题1",
+                list: [
+                    "zhangsan",
+                    "lisi"
+                ]
+            },
+            // methods 选项用于给当前的vue实例添加处理函数
+            methods: {
+                clickFn(e, name, i) {
+                    console.log(e, name, i)
+                    // console.log(this.title)
+                    // alert("click")
+                    this.title = this.create();
+                    
+                },
+                moveFn(e) {
+                    // 如果事件绑定时 不带括号 那么事件处理函数可以收到原生的事件event对象
+                    console.log(e)
+                    // alert("move")
+                },
+                create() {
+                    return "<h1>abc</h1>"
+                }
+            },
+        });
+
+    </script>
+</body>
+</html>

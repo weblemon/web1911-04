@@ -5,7 +5,7 @@ package-lock.json
 node_modules/
 
 # 星号是通配符
-*.json
+# *.json
 # 02/1.txt
 
 # 02/*.txt

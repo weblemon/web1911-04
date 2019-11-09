@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>8.v-bind指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #root {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+        }
+    
+    </style>
+</head>
+<body>
+
+    
+    <div id="root" v-bind:index="{}" v-bind:style="{background: 'rgba(0,0,0,'+(num/100)+')' }">
+        <!-- <h1 v-bind:index="index">{{title}}</h1> -->
+
+        <!-- 
+            v-bind 主要是给html的属性绑定（动态）值的
+
+            v-bind:style 可以给html元素绑定动态的style内联样式
+
+            v-bind:style="字符串"
+            v-bind:style="数组"
+            v-bind:style="对象"
+         -->
+        <div v-bind:style="style"></div>
+        <div>{{num}}</div>
+        <input type="range" v-model="num">
+    </div>
+
+
+    <script>
+    var vm = new Vue({
+        el: "#root",
+        data: {
+            title: "标题栏",
+            num: 0,
+            index: 500,
+            // style样式的绑定可以直接支持css样式的字符串
+            // style: "background: red; width: 100px; height: 100px;"
+
+            // style样式的绑定也可以直接支持对象结构的css样式
+            style: [
+                {
+                    background: "Red",
+                    width: "100px",
+                    height: "100px"
+                },
+                {
+                    border: "5px solid #000"
+                }
+            ],
+            // bg: {
+            //     background: 'rgba(0,0,0,1)'
+            // }
+        }
+    })
+
+    // vm.$mount("#root");
+
+    // vm.$mount(document.getElementById("root"))
+    
+    </script>
+
+</body>
+</html>

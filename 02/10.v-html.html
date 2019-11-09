@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>10.v-html</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+        <!-- 
+            v-html 和插值表达式不同的地方是
+            v-html可以动态的向某个元素中用字符串的方式插入html元素
+         -->
+        <div v-html="html"></div>
+
+        <div v-text="html"></div>
+        <!-- {{html}} -->
+    </div>
+        
+
+
+    <script>
+    var vm = new Vue({
+        el: "#root",
+        data: {
+            html: "<h1>标题一个</h1>"
+        }
+    })
+    
+    </script>
+
+</body>
+</html>

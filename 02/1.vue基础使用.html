@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.vue基础使用</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 模板 View -->
+        <h1>{{title}}</h1>
+        <button v-for="value in list">{{value}}</button>
+    </div>
+    
+    <script>
+        // 初始化实例一个vue对象
+        var vm = new Vue({
+            // el 挂载当前实例在id为root的div上
+            el: "#root",
+            // data 选项 提供数据
+            data: {
+                // 提供一个变量
+                title: "第一次使用vue",
+                // 通过数组的方式循环
+                list: ["按钮1", "按钮2", "按钮3", "按钮4"]
+            }
+        });
+
+    </script>
+</body>
+</html>
