@@ -1,0 +1,11 @@
+# 忽略哪些文件不用上传到远程仓库
+
+# 表示package-lock文件不会被保存在仓库中
+package-lock.json
+node_modules/
+
+# 星号是通配符
+*.json
+# 02/1.txt
+
+# 02/*.txt
