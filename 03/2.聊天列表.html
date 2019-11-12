@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.99乘法表</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .input {
+            width: 500px;
+            height: 200px;
+            border: 1px solid #000;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0 20px;
+            width: 500px;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        .textLeft {
+            text-align: left;
+        }
+
+        .textRight {
+            text-align: right;
+        }
+
+        .message {
+            display: inline-block;
+            background: #ccc;
+            border-radius: 5px;
+            padding: 3px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <ul>
+            <li v-for="item in list">
+                <!-- <div v-bind:class="{
+                    textLeft: item.name === '张三',
+                    textRight: item.name === '李四'
+                }"> -->
+                <div v-bind:style="{
+                    textAlign: item.name === '张三' ? 'right' : 'left',
+                }">
+                    <span>{{item.name}}</span>
+                    <div class="message">
+                        <span>{{item.content}}</span>
+                    </div>
+                    <span>{{item.date}}</span>
+                </div>
+                <!-- {{item}} -->
+            </li>
+        </ul>
+
+        <textarea class="input" v-model="data"></textarea>
+        <div>
+            <button v-on:click="send">发送</button>
+        </div>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                list: [
+                    {
+                        name: "张三",
+                        content: "输入的内容",
+                        date: new Date().toLocaleTimeString()
+                    }
+                ],
+                data: ""
+            },
+            methods: {
+                send() {
+                    // console.log(this.data)
+
+                    setTimeout(() => {
+                       this.list.push({
+                           name: "李四",
+                           content: "不跟你聊",
+                           date: new Date().toLocaleTimeString()
+                       }) 
+                    }, 500);
+
+                    this.list.push({
+                        name: "张三",
+                        content: this.data,
+                        date: new Date().toLocaleTimeString()
+                    })
+                    this.data = "";
+                }
+            },
+        })
+    
+    </script>
+</body>
+</html>

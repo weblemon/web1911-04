@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3.事件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div 
+            class="parent" 
+            v-bind:style="{
+                width: '300px',
+                height: '300px',
+                background: 'red'
+            }" 
+            v-on:mousedown.left="run('parent.left')"
+            v-on:mousedown.right="run('parent.right')"
+        >
+
+
+           
+        
+
+            <!-- 
+                v-on:eventName.stop
+                v-on:eventName.capture
+                v-on:eventName.self
+                v-on:eventName.once
+                v-on:eventName.prevent
+
+                在eventName后面跟 .stop 可以阻止事件冒泡 stopPropagation();
+                在eventName后面跟 .capture 事件不在冒泡阶段才执行，直接在捕获阶段就执行
+                在eventName后面跟 .self 判断当前正在触发事件的元素(event.target)是不是当前元素触发的 如果是子元素触发的事件 不会执行 
+                在eventName后面跟 .once 事件只执行一次
+
+                
+                 在eventName后面跟 .prevent 阻止事件的默认行为 preventDefault()
+             -->
+            <div
+                v-bind:style="{
+                    width: '100px',
+                    height: '100px',
+                    background: 'blue'
+                }" 
+                class="child" 
+            >
+            
+
+            </div>
+        </div>
+        
+
+        <input type="text" v-on:keydown.up="run('up')" v-on:keydown.down="run('down')">
+
+        <!-- 
+            按键修饰符有两种使用方式
+
+            1. 使用按键名称
+                .esc
+                .a-z
+                .enter
+                .delete
+                .f1-f12
+                .up
+                .down
+                .left
+                .right
+                .space
+            2. 使用键盘码
+         -->
+
+
+        <!-- 
+            系统修饰符
+            如果加了系统修饰符 必须同时按下系统修饰符 事件处理函数才会执行
+
+            1. ctrl
+            2. shift
+            3. alt
+            4. meta
+
+
+            .exact 用来精确匹配系统修饰符的
+
+            v-on:click.ctrl.shift.a // 如果多按下了alt键 事件就不会触发
+            v-on:click.ctrl.a       // 如果多按下了 shift 或者 alt 事件就不会触发
+
+        
+        -->
+
+
+        <!-- 
+            鼠标修饰符
+            v-on:mousedown.left
+            v-on:mousedown.right
+            v-on:mousedown.middle
+
+         -->
+
+        
+
+    </div>
+
+    <script>
+        
+        // document.addEventListener("keydown", (e) => {
+        //     console.log(e.key);
+        // })
+
+        // 自定义添加键盘别名 = 键盘码
+        Vue.config.keyCodes.num1 = 49;
+        // Vue.config.keyCodes.num2 =  
+        var vm = new Vue({
+            el: "#root",
+            methods: {
+                run(text) {
+                    console.log(text, event.key)
+                    // 阻止事件派发 冒泡
+                    // event.stopPropagation();
+
+                    // 阻止某些事件的默认行为
+                    // event.preventDefault()
+                }
+            },
+        })
+    
+    </script>
+</body>
+</html>

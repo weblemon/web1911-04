@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5.实例的其他选项</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        
+            <h1>{{title}}</h1>
+            
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            // 绑定元素
+            el: "#root",
+            data: {
+                title: "标题1",
+                list: [],
+            },
+            // 当你的实例选项中如果存在template选项 会用模板里的字符去替换el选项绑定元素
+            // 也就是说template选项存在的时候 el选项绑定的元素只是替换目标了
+            // template: "<div class='aa'><h1>2{{title}}</h1></div>"
+            // 如果想在template里写多行代码可以使用模板字符串 ``
+            // template选项里只能有一个根元素
+            template: `
+                <div class="app">
+                    <h1>{{title}}</h1>
+                    <input type="text" v-model="title" >
+                    {{list}}
+                </div>
+            `,
+
+            // watch 用于监听data选项里的成员什么时候发生了改变
+            // 你要想监听data里的那个成员 就在下面写成员名称的同名函数
+            // 同时会给函数中传递两个参数 一个是变化后的新值 一个是变化之前的（上一次的）值
+            watch: {
+                title(newVal, oldVal) {
+                    // console.log("title发生改变了", "newVal:", newVal, "oldVal:", oldVal)
+                    this.list = [
+                        newVal + "@qq.com",
+                        newVal + "@163.com",
+                        newVal + "@gmail.com"
+                    ]
+                }
+            },
+            
+        })
+    
+    </script>
+</body>
+</html>

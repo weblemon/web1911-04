@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>event</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .autocomplete{
+            width: 300px;
+            height: 30px;
+            border: 1px solid #000;
+            position: relative;
+        }
+        .autocomplete input {
+            width: 100%;
+            height: 100%;
+        }
+        .autocomplete ul {
+            position: absolute;
+            padding: 0;
+            list-style: none;
+            width: 100%;
+            border: 1px solid #000;
+            border-bottom: none;
+            margin: 0;
+        }
+        .autocomplete ul li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #000;
+        }
+        .autocomplete ul li.active {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="autocomplete">
+            <input type="text" @keydown.up.down.enter.prevent="keySelect" v-model="val">
+            <ul>
+                <li 
+                    v-for="(email, index) in emails" 
+                    :class="{
+                        active: index === selectIndex
+                    }" 
+                    
+                    @click="select(email)">
+                    {{email}}
+                </li>
+            </ul>
+        </div>
+
+        <select name="" id="">
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+        </select>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{
+                val: '',
+                selectIndex: 0
+            },
+            methods: {
+                select(email) {
+                    this.val = email
+                },
+                keySelect(e) {
+                    if (!this.val) return;
+                    if (e.keyCode === 38) {
+                        // 上
+                        this.selectIndex--;
+                    } else if (e.keyCode === 40) {
+                        // 下
+                        this.selectIndex++
+                    } else if (e.keyCode === 13) {
+                        this.val = this.emails[this.selectIndex]
+                    }
+                }
+            },
+            watch: {
+                selectIndex(val) {
+                    const max = this.emails.length - 1
+                    const min = 0
+                    if (val > max) {
+                        this.selectIndex = min
+                    }
+                    if (val < min) {
+                        this.selectIndex = max
+                    }
+                }
+            },
+            computed: {
+                emails() {
+                    if (!this.val) return [];
+                    if (/@/.test(this.val)) return []
+                    return [
+                        this.val + '@163.com',
+                        this.val + '@qq.com',
+                        this.val + '@gmail.com'
+                    ]
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>

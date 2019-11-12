@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4.表单</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        {{test}}
+        <input type="checkbox" v-model="test">
+
+        <ul>
+            <li v-for="(item, index) in list">
+                <input type="checkbox" v-model="item.checked">
+                <span>{{item.name}}</span>
+                <button @click="deleteUser(item, index)">删除</button>
+            </li>
+        </ul>
+
+
+        <!-- 
+            v-on: ===  @
+            @符号是v-on:的简写方式
+         -->
+        <!-- <button v-on:click="deleteUser('v-on')">删除所选</button> -->
+        <button @click="deleteUsers">删除所选</button>
+        <h1 style="color: red;">想一下全选功能怎么做</h1>
+        <button @click="selectAll">全选</button>
+        <button>反选</button>
+
+        <div>
+            {{list}}
+        </div>
+
+
+        
+        <!-- 
+            checkbox 作为多选框 多选操作的时候 v-model绑定一个数组 必须指定一个当前选项的value值
+            如果想让其默认选中 只需要在数组中加入 要选中input的value值即可
+
+            checkbox 作为单个使用时 只需要绑定boolean变量即可
+         -->
+
+
+        <h2>请选择下面正确的答案：</h2>
+        <div>
+            <input id="type1" type="checkbox" v-model="selects" value="type1">
+            <label for="type1">A: type1</label>
+        </div>
+        <div>
+            <input id="type2" type="checkbox" v-model="selects" value="type2">
+            <label for="type2">B: type2</label>
+        </div>
+        <div>
+            <input id="type3" type="checkbox" v-model="selects" value="type3">
+            <label for="type3">C: type3</label>
+        </div>
+
+
+
+        <!-- 
+            radio
+            单选框 必须v-model绑定一个 变量 变量的值为字符串 必须设置value  
+            
+            单选框绑定的值只要和当前这个单选框里面的value相等 就能被选中
+            
+        -->
+
+        <h2>请选择性别:</h2>
+        <div>
+            <input type="radio"  id="sex1" value="男" v-model="sex">
+            <label for="sex1">男</label>
+        </div>
+        <div>
+            <input type="radio" id="sex2" value="女"  v-model="sex">
+            <label for="sex2">女</label>
+        </div>
+
+        {{sex}}
+
+        <!-- 
+            select 使用v-model绑定一个字符值
+
+            只要select绑定的值 和option里的value匹配就会被选中
+
+            如果是多选模式 使用v-model 绑定一个数组
+            只要数组中有某一个option的value 那个option就会被选中
+         -->
+
+         <h2>请选择城市:</h2>
+         <select v-model="city" multiple>
+            <option value="bj">北京</option>
+            <option value="sh">上海</option>
+            <option value="tj">天津</option>
+        </select>
+        {{city}}
+
+        <h2>请选中你想要选择的用户</h2>
+
+        <select v-model="users" multiple>
+            <!-- 
+                v-bind指令 可以省略掉 直接使用（:）冒号即可
+                冒号是v-bind的简写语法
+
+             -->
+            <option v-for="item in list" :value="item.name">{{item.name}}</option>
+        </select>
+        {{users}}
+
+       <h2>test1 为yes的时候选中 为no的时候不被选中</h2>
+       <!-- 
+           true-value
+           false-value
+           用于格式化数据来选中checkbox
+        -->
+       <input 
+            type="checkbox" 
+            v-model="test1" 
+            // 当你提供的数据为yes的时候选中
+            true-value="yes" 
+            // 当你提供的数据为no的时候选中
+            false-value="no"
+        >
+        {{test1}}
+
+
+        <!-- 
+            修饰符
+            1. lazy 双向绑定延迟更新 onChange事件
+            2. number 把数据格式化成number
+            3. trim 删除首尾空白字符
+         -->
+
+         <!-- 
+             v-model的数据更新功能 默认使用的是input事件
+             v-model的事件更改为表单的change事件
+          -->
+        <input type="text" v-model.lazy.trim="title">
+        {{title}}
+
+
+        <!-- 
+            v-model.number 只有当你输入的内容是数字的时候才会更新变量num
+         -->
+        <input type="text" @input="input" v-model.number="num">
+        {{num}}
+        {{typeof num}}
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                num: 1,
+                title: "",
+                test1: "yes",
+                test: false,
+                sex: "男",
+                city: ["bj"],
+                users: [],
+                selects: ['type1', "type2"],
+                list: [
+                    {
+                        name: "张三",
+                        checked: false
+                    },
+                    {
+                        name: "李四",
+                        checked: true
+                    },
+                    {
+                        name: "老王",
+                        checked: false
+                    }
+                ]
+            },
+            methods: {
+                input() {
+                    console.log(this.num)
+                },
+                selectAll() {
+                    this.list.forEach((value) => {
+                        value.checked = true
+
+                        // value.checked = !value.checked
+                    })
+                },
+                deleteUsers() {
+                    // console.log(this.list)
+
+                    // 把checked为true的过滤掉
+                    this.list = this.list.filter((value) => {
+                        // 保留为false的checked
+                        return !value.checked
+                    })
+                    // console.log(newList)
+                },
+                deleteUser(user, index) {
+                    // console.log(user,  index)
+                    this.list.splice(index, 1);
+                }
+            },
+        })
+    
+    </script>
+</body>
+</html>
