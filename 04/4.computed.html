@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4.computed</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" v-model="email" />
+        <ul>
+            <li v-for="item in getEmails()">{{item}}</li>
+        </ul>
+
+
+        <!-- 使用getEmails生成一个新数组 -->
+        <!-- {{getEmails()}} -->
+        <!-- {{getEmails()}} -->
+        {{index}}
+
+        {{getEmails()}}
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                email: "",
+                index: "xx",
+                emails:  ["@qq.com", "@163.com", "@gmail.com", "@126.com"],
+            },
+            methods: {
+                getEmails() {
+                    console.log("methods rerender")
+                    // 1. 只要模板上的变量(任意一个变量)发生变化的时候就会去调用
+                    // 2. 如果模板有多个地方需要用到该函数 该函数会调用多次
+                    
+                    // 缺点
+                    // 如果使用方法来生成数据的话
+                    // 1. 只要使用一个地方就会执行一次函数
+                    // 2. 只要模板里有任意变量发生改变 就会重新运行一次函数
+
+                    if (!this.email) return [];
+                    return this.emails.map((value) => {
+                       return this.email + value;
+                    })
+                }
+            },
+
+            // computed 会把函数的返回值给计算出来
+            // 然后缓存上当做变量使用
+            computed: {
+                // 被当做属性使用 
+                emailList() {
+                    console.log("computed rerender")
+                    // 1. 计算一次之后会把结果缓存起来 不执行第二次
+                    // 2. 只有当computed里的函数关联的变量发生了改变之后才会重新计算
+
+                    // 优点
+
+                    // 1. 多处使用也只计算一次
+                    // 2. 管理的变量 或者依赖的变量发生改变才会触发更新
+                    if (!this.email) return [];
+                    return this.emails.map((value) => {
+                       return this.email + value;
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

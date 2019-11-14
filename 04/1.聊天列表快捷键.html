@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.99乘法表</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                list: ["Xxx","yyy"],
+                message: "",
+                sendTypes: ["Enter", "Ctrl+Enter"],
+                sendMode: "Enter"
+            },
+            template: `
+            <div class="app">
+                <ul>
+                    <li v-for="item in list">{{item}}</li>    
+                </ul>
+                <textarea index="0" v-if="sendMode === 'Enter'" v-model="message" @keydown.enter.prevent="send"></textarea>
+                <textarea index="1" v-else v-model="message" @keydown.enter.ctrl="send"></textarea>
+                {{sendMode}}
+                <select v-model="sendMode">
+                    <option v-for="item in sendTypes" :value="item">{{item}}</option>    
+                </select>
+            </div>
+            `,
+            methods: {
+                // enter(event) {
+                //     if (this.sendMode !== "Enter" || event.ctrlKey) return;
+                //     this.send();
+                // },
+                // ctrlEnter() {
+                //     if (this.sendMode !== "Ctrl+Enter") return;
+                //     this.send();
+                // },
+                send() {
+                    if (this.message) {
+                        this.list.push(this.message);
+                        this.message = ""
+                    }
+                }
+
+            },
+        })
+    
+    </script>
+</body>
+</html>

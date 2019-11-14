@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2.邮箱列表补全</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .active {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+
+        <input 
+            type="text" 
+            @keydown.up.prevent="keydown(0)" 
+            @keydown.down.prevent="keydown(1)" 
+            @keydown.enter="select(emailIndex)"
+            v-model="email" 
+
+        />
+
+        <ul>
+            <li 
+                v-for="(item, index) in list"
+                @click="select(index)"
+                :class="{
+                    active: emailIndex === index
+                }">{{item}}</li>
+        </ul>
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                email: "",
+                list: [],
+                emailIndex: 0,
+                emails:  ["@qq.com", "@163.com", "@gmail.com", "@126.com"],
+            },
+            watch: {
+                email(newVal, oldVal) {
+                    // 在组合候选列表之前先把输入框里的@符号去掉
+                    // this.emails.forEach((v) => {
+                    //     newVal = newVal.replace(v, "")
+                    // })
+
+                    // 如果有汉字把汉字替换掉
+                    if (/[\u4e00-\u9fa5]/.test(newVal)) {
+                        this.email = newVal.replace(/[\u4e00-\u9fa5]+/g, "");
+                        return;
+                    }
+
+                    // 如果已经是一个邮箱了 就把候选列表清空
+                    if (/^\w+@[a-z0-9-]+\.[a-z]+$/.test(newVal)) {
+                        // 如果是一个邮箱 就把候选列表清空
+                        this.list = [];
+                        return;
+                    }
+
+                    // 如果输入框的内容是空的 清空列表
+                    if (!this.email) {
+                        this.list = [];
+                        return;
+                    };
+
+                    // 根据输入的内容生成候选列表
+                    this.list = this.emails.map((value) => {              
+                        return newVal + value
+                    })
+
+                }
+            },
+            methods: {
+                keydown(num) {
+                    // console.log(num)
+                    // 方向为上
+                    if (num === 0) {
+                        if (this.emailIndex === 0) return;
+                        this.emailIndex--;
+                    } else if (num === 1) {
+                        if (this.emailIndex >= this.list.length - 1) return;
+                        // 方向为下
+                        this.emailIndex++;
+                    }
+                },
+                select(index) {
+                    // console.log(index)
+                    this.emailIndex = index;
+                    this.email = this.list[index]
+                }
+            },
+
+
+        });
+
+
+        var arr = [
+            "张三",
+            "李四",
+            "李伟",
+            "张军",
+        ]
+    </script>
+</body>
+</html>

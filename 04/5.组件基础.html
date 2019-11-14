@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5.组件基础</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!--
+        1. 必须要生成一个实例
+        2. 所有的内容都在实例中
+        3. 组件
+
+            相当于是一套可以重复使用的组件实例
+
+            a. 组件必须先编写然后在使用
+            b. 组件是什么 （把vue实例拆分成很多的小实例）
+            b. 组件的写法
+                1). 使用Vue.component() 函数来创建 （全局组件）
+                    全局组件是在页面中出现的次数很多的情况下使用全局的
+                    一次注册 所有地方都能使用
+                2). 直接局部注册    （局部组件）
+                    在哪里使用就在哪里注册
+                
+                组件可以使用（依赖）其他的组件
+            
+    -->
+
+    <div id="root">
+
+    </div>
+
+    <script>
+
+        // Vue.component(componentName, options)
+        // 1. componentName 字符串 组件名称
+        // 2. options 和Vue实例的选项一样 只是少了el选项 组件名称就是el选项
+
+        
+        const AutoComplateEmail = {
+            // 组件里的data选项和实例的data选项有区别 区别是一个函数返回一个对象
+            data() {
+                return {
+                    value: "",
+                    prefixs:  ["@qq.com", "@163.com", "@gmail.com", "@126.com"],
+                }
+            },
+            methods: {
+                
+            },
+            watch: {
+                
+            },
+            computed: {
+                list() {
+                    if (!this.value) return [];
+                    return this.prefixs.map((value) => this.value + value);
+                }
+            },
+            // 组件的模板只能使用当前组件的方法和属性已经计算函数
+            template: `
+            <div class="auto-complate-email">
+                <input type="text" v-model="value" />   
+                <ul>
+                    <li v-for="item in list">{{item}}</li>
+                </ul> 
+            </div>
+            `,
+
+        }
+        
+        // Vue.component("AutoComplateEmail", AutoComplateEmail)
+
+        Vue.component("Test", {
+            components: {
+                AutoComplateEmail
+            },
+            template: `
+                <div class="test">
+                    <h1>Test</h1>
+                    <AutoComplateEmail />    
+                </div>
+            `
+        })
+
+
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                title: "xxx"
+            },
+            template: `
+            <div class="app">
+                <Test />  
+            </div>
+            `,
+            // 局部注册组件
+            // 在哪里使用就在哪里注册
+            components: {
+                AutoComplateEmail
+            }
+        })
+    </script>
+</body>
+</html>

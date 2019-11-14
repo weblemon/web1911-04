@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3.watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" v-model="obj.username" />
+        <input type="password" v-model="obj.password" />
+        {{obj}}
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                // text1: "",
+                text2: "",
+                obj: {
+                    username: "",
+                    password: ""
+                }
+            },
+            watch: {
+                // obj(newVal, oldVal) {
+                //     // 对象的成员是无法被监听到变化的
+                //     console.log("obj发生了变化")
+                // }
+
+                // text2(newVal, oldVal) {
+
+                // },
+
+                // text2: {
+                //     // 监听变化的处理函数
+                //     handler(newVal, oldVal) {
+                //         console.log("text2变化了", newVal)
+                //     }
+                // }
+
+                obj: {
+                    // 监听变化的处理函数
+                    handler(newVal, oldVal) {
+                        console.log("text2变化了", newVal)
+                    },
+                    // 递归检查
+                    // 检查属性是否有发生变化
+                    // 不管是数组还是对象 如果不是整个数组发生改变 或者整个对象发生改变
+                    // 只是成员发生改变 需要开启deep递归检查 才能监听到变化
+                    deep: true
+                }
+            },
+        })
+    
+    </script>
+</body>
+</html>
