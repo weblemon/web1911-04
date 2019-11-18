@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.组件实例</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./components/icon.js"></script>
+    <script src="./components/button.js"></script>
+    <script src="./components/table.js"></script>
+    <script src="./components/switch.js"></script>
+    <style>
+        .switch {
+            width: 100px;
+            height: 30px;
+            border: 1px solid #000;
+        }
+
+        .switch .switch-btn {
+            width: 50px;
+            height: 30px;
+            background: #000;
+            transition: 0.3s linear;
+        }
+
+        .switch.switch-on .switch-btn {
+            transform: translateX(50px);
+        } 
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+
+    <div my-Index="1"></div>
+
+    <script>
+        new Vue({
+            el: "#root",
+            methods: {
+                run(event, a) {
+                    // alert(event)
+                    console.log(event, a)
+                },
+                handleRemove1(item, index) {
+                    console.log("第1个table想要删除数据")
+                    // this.iDatas.splice(index, 1);
+                },
+                handleRemove2(item, index) {
+                    console.log("第2个table想要删除数据")
+                    // this.iDatas.splice(index, 1);
+                },
+                handleSelect(selects) {
+                    console.log(selects)
+                },
+                handlerChange() {
+                    this.open = !this.open
+                }
+            },
+            data() {
+                return {
+                    open: false,
+                    iDatas: [
+                        {
+                            user: "张三",
+                            email: "1@qq.com",
+                            mobile: "1320000001"
+                        },
+                        {
+                            user: "李四",
+                            email: "1@qq.com",
+                            mobile: "1320000001"
+                        },
+                        {
+                            user: "老王",
+                            email: "1@qq.com",
+                            mobile: "1320000001"
+                        }
+                    ],
+                    iColums: [
+                        {
+                            title: "账号",
+                            key: "user"
+                        },
+                        {
+                            title: "邮箱",
+                            key: "email"
+                        },
+                        {
+                            title: "手机",
+                            key: "mobile"
+                        }
+                    ],
+                }
+            },
+            template: `
+            <div class="app">
+                {{open}}
+                <ISwitch v-model="open" />
+                
+                
+
+                <Table 
+                    :colums="iColums"
+                    :datas="iDatas"
+                    striped
+                    @remove="handleRemove1"
+                    @select="handleSelect"
+                />
+
+                <Table 
+                    :colums="iColums"
+                    :datas="iDatas"
+                    striped
+                    @remove="handleRemove2"
+                />
+                <Icon 
+                    name="search" 
+                    color="red" 
+                    :size="20"
+                />
+
+                <Button 
+                    htmlType="submit"
+                    type="primary"
+                    size="lg"   
+                    :block="false"
+                    @aaaccc="run"
+                    @aaa="run"
+                    @cc="run"
+                >
+                确认
+                </Button>
+
+                <Button 
+                    htmlType="submit"
+                    type="success"
+                    @ccc123="run"
+                >成功</Button>
+
+                <Button 
+                    htmlType="submit"
+                    type="primary"
+                    size="sm"   
+                >取消</Button>
+
+                <Button 
+                    htmlType="submit"
+                    type="primary"
+                    size="xs"
+                >OK</Button>
+
+            </div>
+            `
+        });
+    </script>
+
+</body>
+</html>
