@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.组件实例</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./components/button.js"></script>
+    <script src="./components/switch.js"></script>
+    <script src="./components/date.js"></script>
+    <script src="./components/card.js"></script>
+    <script src="./components/table.js"></script>
+    <script src="./components/test.js"></script>
+    <style>
+        .switch {
+            width: 100px;
+            height: 30px;
+            border: 1px solid #000;
+        }
+
+        .switch .switch-btn {
+            width: 50px;
+            height: 30px;
+            background: #000;
+            transition: 0.3s linear;
+        }
+
+        .switch.switch-on .switch-btn {
+            transform: translateX(50px);
+        } 
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+
+    <div my-Index="1"></div>
+
+    <script>
+        const vm = new Vue({
+            // el: "#root",
+            beforeCreate() {
+                // console.log("beforeCreate")
+            },
+            created() {
+                // console.log("created")
+            },
+            beforeMount() {
+                // console.log("beforeMount")
+            },
+            mounted() {
+                // console.log("mounted")
+            },
+            data() {
+                return {
+                    open: true,
+                    start: "2019-08-10",
+                    end: "2019-09-10",
+                    content: "content1",
+                    isShow:true,
+                    colums: [
+                        {
+                            title: "账号",
+                            key: "username"
+                        },
+                        {
+                            title: "邮箱",
+                            key: "email"
+                        }
+                    ],
+                    datas: [
+                        {
+                            username: "张三",
+                            email: "1@qq.com"
+                        },
+                        {
+                            username: "李四",
+                            email: "2@qq.com"
+                        }
+                    ]
+                }
+            },  
+            methods: {
+                show(item, index) {
+                    console.log("显示",item.username, "详情", index)
+                },
+                update(item, index) {
+                    console.log("修改",item.username, index)
+                },
+                remove(item, index) {
+                    console.log("删除",item.username, index)
+                }
+            },
+            template: `
+            <div class="app">
+                <Test v-show="isShow" />
+                <Button type="primary" @click="isShow=!isShow">切换</Button>
+                <Table :colums="colums" :datas="datas"> 
+                    <template v-slot:btn="{item, index}">
+                        <Button @click="show(item, index)" type="success">详情</Button>
+                        <Button @click="update(item, index)" type="primary">修改</Button>
+                        <Button @click="remove(item, index)" type="danger">删除</Button>
+                    </template>    
+                </Table>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <Card title="标题111">
+                    <template v-slot:default="scopeProps">
+                        <h1>{{scopeProps.a}}</h1>
+                    </template>
+                </Card>
+
+                <div style="border:1px solid red;">
+                    <input type="date" v-model="start" />   
+                    {{end}} 
+                </div>
+                <!--<DatePiker 
+                    :startDate="start" 
+                    :endDate="end"
+                    @startChange="value => start = value"
+                    @endChange="value => end = value"
+                />-->
+
+                <DatePiker 
+                    :startDate.sync="start" 
+                    :endDate.sync="end"
+                />
+            </div>
+            `
+        });
+
+        vm.$mount("#root")
+    </script>
+
+</body>
+</html>
