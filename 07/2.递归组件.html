@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2.递归组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+
+    <script>
+
+        Vue.component("Tree", {
+            props: {
+                data: Array
+            },
+            created() {
+                console.log("创建组件")
+            },
+            name: "Tree1",
+            template: `
+            <ul>
+                <li v-for="item in data">
+                    <div class="title">{{item.title}}</div>
+                    <Tree1 :data="item.children" v-if="Array.isArray(item.children)" />
+                </li>    
+            </ul>
+            `
+        })
+
+        function map(arr) {
+            arr.forEach(value => {
+                console.log(value.title);
+                if (Array.isArray(value.children)) {
+                    map(value.children);
+                }
+            })
+        }
+
+        var list = [
+                    {
+                        title: "菜单1",
+                        children: [
+                            {
+                                title: "菜单1-1",
+                                children: [
+                                    {
+                                        title: "菜单1-1-1"
+                                    },
+                                    {
+                                        title: "菜单1-1-2"
+                                    },
+                                ]
+                            },
+                            {
+                                title: "菜单1-2",
+                                children: [
+                                    {
+                                        title: "菜单1-2-1"
+                                    },
+                                    {
+                                        title: "菜单1-2-2"
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: "菜单2",
+                        children: [
+                            {
+                                title: "菜单2-1",
+                                children: [
+                                    {
+                                        title: "菜单2-1-1",
+                                        children: [
+                                            {
+                                                title: "菜单2-1-1-1",
+                                            },
+                                            {
+                                                title: "菜单2-1-1-2",
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title: "菜单2-1-2",
+                                    }
+                                ]
+                            },
+                            {
+                                title: "菜单2-2"
+                            }
+                        ]
+                    }
+                ];
+
+        map(list);
+
+
+        const vm = new Vue({
+            el: "#root",
+            data() {
+                return {
+                    list: [
+                        {
+                            title: "菜单1",
+                            children: [
+                                {
+                                    title: "菜单1-1",
+                                    children: [
+                                        {
+                                            title: "菜单1-1-1"
+                                        },
+                                        {
+                                            title: "菜单1-1-2"
+                                        },
+                                    ]
+                                },
+                                {
+                                    title: "菜单1-2",
+                                    children: [
+                                        {
+                                            title: "菜单1-2-1"
+                                        },
+                                        {
+                                            title: "菜单1-2-2"
+                                        },
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            title: "菜单2",
+                            children: [
+                                {
+                                    title: "菜单2-1",
+                                    children: [
+                                        {
+                                            title: "菜单2-1-1",
+                                            children: [
+                                                {
+                                                    title: "菜单2-1-1-1",
+                                                },
+                                                {
+                                                    title: "菜单2-1-1-2",
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            title: "菜单2-1-2",
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: "菜单2-2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            template: `
+            <div class="app">
+                <Tree :data="list" />
+                <!--<ul>
+                    <li v-for="item in list">
+                        <div class="title">{{item.title}}</div>
+                        <ul>
+                            <li v-for="child in item.children">
+                                <div class="title">{{child.title}}</div>
+                                <ul>
+                                    <li v-for="childchild in child.children">{{childchild.title}}</li>
+                                </ul>    
+                            </li>
+                        </ul>
+                    </li>    
+                </ul>-->
+                
+            </div>
+            `
+        })
+        
+    </script>
+</body>
+</html>

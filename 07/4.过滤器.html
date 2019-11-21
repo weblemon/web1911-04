@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4.过滤器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // "".toLocaleLowerCase
+        // "".toLocaleUpperCase
+
+        // 全局过滤器
+        // Vue.filter(filterName, filterHanler(value)): 返回过滤后的value
+        Vue.filter("UpperCase", (value) => {
+            // console.log("11",value)
+
+            return value.toUpperCase()
+        })
+
+        Vue.filter("LowerCase", value => {
+            return value.toLowerCase();
+        })
+
+        Vue.filter("Number", (value) => {
+            return value.replace(/[0-9]/g, "");
+        })
+
+        Vue.filter("yen", value => "￥" + value)
+        Vue.filter("fixed", (value, n = 2) => value.toFixed(n));
+
+        // var a = 222;
+        // a.toFixed()
+
+        new Vue({
+            el: "#root",
+            data() {
+                return {
+                    title: "hello world 123",
+                    price: 100
+                }
+            },
+            // 过滤器就是一个竖线
+            template:`
+            <div class="app">
+                {{title | CamelCase}}
+                <div>商品价格{{price | fixed(5) | yen}}</div>
+            </div>
+            `,
+            // 注册局部过滤器
+            filters: {
+                // CamelCase 只能在当前组件里使用 其他组件不能使用 因为它是局部过滤器
+                CamelCase(value) {
+                   
+                    var arr = value.split(/\s/);
+                    // console.log(arr)
+                    var data = arr.map(value => {
+                        var first = value[0];
+                        if (first) {
+                            return value.replace(first, first.toUpperCase())
+                        }
+                        return value;
+                    })
+
+                    console.log(data);
+                    return data.join("")
+                }
+            }
+        })
+
+        // 过滤器在不改变原数据的情况下改变数据的展示结果
+        // 过滤器可以连续的管道使用
+
+        // 使用过滤器时可以给过滤器传递参数
+        // 过滤器收到的第一个参数是要过滤的value值
+        // 第二个参数开始 就是自定义传递的参数了
+    
+    </script>
+    
+</body>
+</html>

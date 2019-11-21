@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.动态组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+
+    <script>
+        
+        const About = {
+            data() {
+                return {
+                    val: ""
+                }
+            },
+            mounted() {
+                this.$parent.$on("click", () => {
+                    console.log("About 收到了实例click了")
+                })
+            },
+            template:`
+            <div>
+                <input v-model="val" />
+                <h1>About</h1>
+            </div>
+            `
+        } 
+
+        const News = {
+            created() {
+                // console.log(this.$parent)
+                // console.log(this.$parent.a)
+                // console.log(this.$parent.$el)
+                console.log("NEWS")
+            },
+            mounted() {
+                console.log("News mounted")
+                // console.log(this.$el);
+                // console.log(this.$parent.$el);
+            },
+            template:`
+            <div class="news">
+                <h1>News</h1>
+                <input type="checkbox" v-model="$root.isShow" />
+                <input type="text" v-model="$parent.val" />
+            </div>
+            `
+        }
+
+        const Home = {
+            data() {
+                return {
+                    val: "",
+                    a: 100
+                }
+            },
+            created() {
+                // console.log("Home")
+                // 子组件在创建阶段就能访问父组件
+                // 不能访问的父组件的$el dom元素 因为父组件还未mount
+                // console.log(this.$parent)
+                // console.log(this.$children)
+                // this.$on("mousedown", () =>{
+                //     console.log(1)
+                // })
+
+                // 订阅父组件上的aboutdone事件
+                // this.$parent.$on("aboutDone", () => {
+                //     console.log("Home 收到了aboutDone事件了")
+                // })
+
+                this.$parent.$on("click", () => {
+                    console.log("Home 收到了实例click了")
+                })
+            },
+            mounted() {
+                // console.log("Home mounted")
+                // this.$emit("xxx")
+            },
+            beforeDestroy() {
+                console.log("Home组件将要被销毁了")
+            },
+            template:`
+            <div class="home">
+                <h1>Home</h1>
+                <input v-model="val" />
+                <News />
+            </div>
+            `,
+            components: {
+                News
+            }
+        }   
+
+        const vm = new Vue({
+            el: "#root",
+            created() {
+                
+            },
+            mounted() {
+                this.$emit("click")
+            },
+            data() {
+                return {
+                    tabs: ["Home", "News", "About"],
+                    selected: "Home",
+                    isShow: true
+                }
+            },
+            methods: {
+                run() {
+                    this.$emit("click")
+                }
+            },
+            template: `
+            <div class="app" @click="run">
+                <Home />
+                <About />
+            </div>
+            `,
+            components: {
+                Home,
+                About,
+                News
+            }
+        })
+
+        // 动态组件
+        // Vue自带的组件component
+        // <component is="" /> 使用is属性绑定你想要显示的组件名称
+        // 动态组件切换后 会直接销毁该组件
+
+        // <keep-alive> 用于缓存动态组件 和v-if 条件控制的组件
+        // 不让组件被销毁掉 暂时的保存起来
+        
+        
+        // 每个组件实例都能访问的的属性
+        // 1. $root  根组件 所在的实例
+        // 所有的组件访问的$root 都是vue实例
+        // 2. $parent 在子组件里可以访问父组件（组件实例）
+        // 3. $children 在父组件里访问子组件 （组件实例）
+
+        // 一般情况下在编写组件时，不要使用$parent 和 $children 来进行父子通讯
+        // <Select>
+        //      <Option></Option> 
+        // </Select>
+
+
+        // 4. $refs 在标签或者组件上可以使用ref属性来进行标记
+        // vue会吧ref标记的组件或标签保存在$refs对象里
+        // 你可以通过它快速的找到你标记的标签
+        // ref如果是在一个循环的标签或者组件上 会是一个数组
+
+        // ref 可以绑定动态的名称 如果是在v-for循环上 名称相同的会被放到同一个数组里
+        // 如果名称不同 会被添加到$refs的新成员里
+
+        // ref的名称在不是v-for的组件或者标签上 不能重复使用
+        // 如果重复使用 后面的会替换掉前面的组件
+
+        // 5.$on 可以用获取到的组件实例 给该组件监听事件
+        // 父组件里在生命周期不能给 子组件添加监听事件
+        // 在子组件的生命周期里 可以给父组件添加事件监听
+
+
+        // 在子组件里 如果想捕获到父组件里的某一个事件状态
+        // 可以在子组件里监听父组件上$emit的事件
+        // 所有子组件都可以订阅父组件上的事件 由父组件触发事件
+
+        // 每个子组件都可以订阅父组件$emit的事件
+        // 子可以订阅父$emit的事件，父不可以订阅子$emit的事件
+
+        // 6. $.once @click.once="" v-on:mousedown.once 监听一次事件
+
+        // 7. $.off(eventName, eventHandler) 取消事件监听
+        // const handler = () => {}; 
+        // addEventListener("click", handler)
+        // removeEventListener("click", handler)
+
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3.混入</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./components/card.js"></script>
+    <script src="./components/test.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- 
+        混入主要是用来 提高可维护性的
+        每一个组件里都需要 i- 的css样式前缀 使用全局混入
+        如果以后老板说需要吧i- 换成my-
+
+        1. 全局混入 必须是所有的组件都需要的 或者大多数组件都需要的共同的属性
+     -->
+
+    <script>
+        // 全局混入
+        Vue.mixin({
+            // 跟组件的选项一样
+
+            // 混入变量成员
+            data() {
+                return {
+                    prefix: "i-"
+                }
+            },
+            // 混入方法成员
+            methods: {
+                run() {
+                    console.log("run")
+                }
+            },
+            // 混入计算属性
+            computed: {
+                
+            },
+            // 混入监听
+            watch: {
+                
+            },
+            // 混入生命周期钩子函数
+            beforeCreate() {
+                console.log("开始混入")
+            },
+            created() {
+                
+            },
+            beforeMount() {
+                
+            },
+            mounted() {
+                
+            },
+            beforeUpdate() {
+                
+            },
+            updated() {
+                
+            },
+            beforeDestroy() {
+                
+            },
+            destroyed() {
+                
+            },
+        })
+        
+        // 局部混入
+        const myMixin = {
+            methods: {
+                getElement() {
+                    console.log("getElement")
+                    return this.$el;
+                }
+            },
+        }
+
+        // 全局组件
+        Vue.component("Input", {
+            // 注册局部混入
+            mixins: [myMixin], 
+            beforeCreate() {
+                console.log("INPUT 开始混入")
+            },
+            template: `
+            <div :class="[prefix+'input']" @click="getElement">
+                <input />    
+            </div>
+            `,
+            methods: {
+                getElement() {
+                    console.log("myGetElement")
+                }
+            },
+        })
+
+        new Vue({
+            // 局部混入
+            // mixins:
+
+            // 局部组件
+            // components:
+            el: "#root",
+            template: `
+            <div class="app">
+                <Card>card</Card>
+                <Test>test</Test>
+                <Input />
+            </div>
+            `
+        })
+
+
+
+        // 混入分为两种
+        // 1. 全局混入
+        // 2. 局部混入 （需要在组件中注册）
+
+        // 混入合并
+        // 在混入中的方法和属性或者计算函数或者是watch 如果组件中出现重复 覆盖混入的方法
+        // 其实混入就相当于添加了固定的属性进入了组件的原型链中
+        // 当组件自己拥有该属性或方法之后 会覆盖其原型链中的属性和方法
+
+        // 生命周期混入的和组件内部的生命周期钩子都会执行 不会合并
+        // 先执行混入的生命周期钩子回调函数 然后 执行组件自身的生命周期钩子回调函数
+
+
+
+    
+    </script>
+    
+</body>
+</html>
