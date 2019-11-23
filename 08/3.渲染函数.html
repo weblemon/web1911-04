@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3.渲染函数</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+
+    <script>
+
+        Vue.component("Test", {
+            props: {
+                title: String
+            },
+            // template:`
+            // <div class="test">{{title}}<slot />
+                
+            // </div>
+            // `,
+            render(h) {
+                return h("div", { class: "test" }, "!2321")
+            },
+            created() {
+                console.log(this);
+            },
+            methods: {
+                create() {
+                    // console.log()
+                    // const child = this.$createElement("div", 12222);
+                    // this.$children.push(child)
+                }
+            },
+        })
+
+        new Vue({
+            el: "#root",
+            // 如果要显示虚拟dom 必须通过render选项函数来执行
+            render(createElement) {
+                // 创建一个虚拟dom
+                console.log(this.$createElement);
+                // 创建一个div标签 嵌套的内容是123
+                // return createElement("div", "123")
+
+                // 给标签添加样式
+                // return createElement("div", {
+                //     // v-bind:style
+                //     style: {background: "red"},
+                //     // v-bind:class
+                //     class: "aa bb",
+                //     // v-on:
+                //     on: {
+                //         // v-on:click
+                //         click() {
+                //             alert(1)
+                //         },
+                //         // v-on:mousedown
+                //         mousedown() {
+                //             alert(1)
+                //         }
+                //     }
+                // }, "123")
+
+                // 创建一个div标签 嵌套的内容是 h1标签
+                // return createElement("div", [
+                //     createElement("h1", "222"),
+                //     createElement("h2", "222")
+                // ])
+                
+                // 渲染一个组件
+                // return createElement("Test", "哈哈")
+
+                // 渲染组件并传递prop
+                // return createElement("Test", {
+                //     // 传递prop
+                //     props: {
+                //         // v-bind:title="!23"
+                //         title: "!23"
+                //     }
+                // }, "哈哈")
+                return this.$createElement("Test", {
+                    props: {
+                        title: "!22223"
+                    },
+                }, ["哈哈", "哈哈"])
+
+            
+            // createElement(name, options, slot)
+            // 1. name 组件名称 或标签名称
+            // 2. options 选项
+            //  a. style 绑定样式
+            //  b. class 绑定class
+            //  c. on 绑定事件
+            //  d. props 绑定参数
+            // 3. slot 单个内容的时候 字符串 多个内容的时候 使用数组 
+
+            }
+        })
+    
+    </script>
+
+</body>
+</html>

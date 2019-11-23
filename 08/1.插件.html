@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.插件</title>
+     <!-- 引入样式 -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+    // 插件是一个对象
+    // 对象中必须包含一个install方法
+    const plugin = {
+        // 插件包含两个参数
+        // 1. Vue Vue类对象
+        // 2. options 自定义选项
+        install(Vue, options) {
+            var lang = {
+                "zh-CN": {
+                    test: "测试"
+                },
+                "en": {
+                    test: "Test"
+                }
+            }
+
+            Vue.component("ElButton", {
+                template: "<button><slot /></button>"
+            })
+
+            Vue.component("Test", {
+                data() {
+                    return {
+                        test: lang[options.lang].test
+                    }
+                },
+                template:`
+                <div class="test">{{test}}</div>
+                `
+            })
+            Vue.filter("abc", value => value.replace("abc", ""))
+        }
+    }
+
+    // 使用插件
+    // 注册插件
+    Vue.use(plugin, {a: 100, lang:"en"})
+
+
+    // Vue.iUse = function(pluginObj, options) {
+    //     if (typeof pluginObj === "object" && typeof pluginObj.install === "function") {
+    //         pluginObj.install(Vue, options)
+    //     }
+    // }
+
+    Vue.use(plugin, {})
+
+
+    const vm = new Vue({
+        el: "#root",
+        data() {
+            return {
+                title: "12321abc"
+            }
+        },
+        template:`
+        <div>
+            <Test />
+            {{title | abc}}
+            <el-button>默认按钮</el-button>
+        </div>
+        `
+    })
+    
+    </script>
+</body>
+</html>

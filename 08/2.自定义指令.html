@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2.自定义指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // 1. 全局指令
+        // 2. 局部指令
+        
+        // Vue.directive(name, {})
+
+        // 在模板中使用指令时 使用v-listener
+        Vue.directive("listener", {
+            // 在指令和元素绑定时 触发
+            bind(el, binding, vnode, oldVnode) {
+                // console.log("指令已经被绑定上了")
+                // console.log(el, binding);
+                // binding.value();
+
+                // 给元素监听事件
+                const { arg, value } = binding;
+                if (arg) {
+                    // 给原生元素绑定事件
+                    // 事件名称通过 binding.arg 获取的
+                    // 事件的处理函数通过 binding.value 获取的
+                    console.log(arg, value);
+                    el.addEventListener(arg, (event) => {
+                        if (typeof value === "function") {
+                            value(event)
+                        }
+                    })
+                }
+            },
+            // 在指令所绑定的元素 被插入进dom时触发
+            inserted() {
+                console.log("指令的元素已经被添加进dom了")
+            },
+            // 在指令所绑定上下文中 更新时触发
+            update() {
+
+            }
+        })
+
+
+        // 在指令的选项中可以添加不同时期的回调函数
+        // 每一个回调函数中都可以接收4个参数
+        // 1. el 指令绑定的目标对象
+        // 2. binding 指令绑定的信息以及绑定的值
+        //  (1) arg 指令冒号后面的参数 指令后面只能写一个参数
+        //      v-a:test 在这里a是指令名称 test是参数 不能有多个参数
+        //  (2) expression 表达式 指令引号中的原始名称 字符串形式的
+        //  (3) name 指令的名称
+        //  (4) rawName 指令的使用名称
+        //  (5) value 指令所绑定的值
+        // 3. 指令所绑定的元素新的虚拟dom
+        // 4. 指令所绑定的元素旧的虚拟dom
+
+        Vue.directive("focus", {
+            bind(el, binding, vnode, oldVnode) {
+                console.log("hook bind", el)
+                // 在元素还在绑定阶段 没有被插入到dom之前给它添加焦点
+                // bind 的这个钩子
+                // 如果要对元素添加一些dom行为 需要等到inserted钩子的时候在添加
+                // 否则不生效
+
+                // 在绑定阶段 
+                // 可以给元素添加事件 添加样式
+                el.focus();
+            },
+            inserted(el, binding, vnode, oldVnode) {
+                console.log("hook inserted", el)
+                el.focus();
+            },
+            update(el, binding, vnode, oldVnode) {
+                // 指令所在的组件中
+                // 如果数据发生改变
+                // 就会触发这个钩子
+                // 在一个指令中可以获取到 指令所在组件中的模板更新的通知
+
+                console.log("hook update", el)
+            }
+        })
+    
+        Vue.directive("sync", {
+            bind(el, binding, vnode, oldVnode) {
+                // console.log(binding)
+                el.value = binding.value
+                // console.log(vnode)
+
+                // vnode 虚拟dom对象
+                // 虚拟dom对象 绑定了context 上下文（指令所在的实例）
+
+                // 组件是以数据来驱动dom变化
+                // 如果频繁更新dom 浏览器会频繁的渲染界面
+                // 为了不频繁的更新dom 创建了虚拟dom对象
+                // 在更新数据前去比较虚拟dom  如果有数据发生改变 我们去改真实dom
+
+
+                // console.log(binding)
+                el.addEventListener("input", (event) => {
+                    // console.log(el.value)
+                    vnode.context[binding.expression] = el.value
+                })
+            },
+            update(el, binding, vnode, oldVnode) {
+                //  
+
+                // binding.expression
+
+                // console.log(vnode.context[binding.expression])
+                // console.log(vnode.context.text, oldVnode.context.text);
+
+                // console.log(oldVnode.context[binding.expression])
+
+                // if (binding.value !== oldVnode.context[binding.expression]) {
+                //     el.value = binding.value
+                // }
+
+                // 被动更新不需要做比较
+                el.value = binding.value
+
+                // console.log("update")
+                // el.value = binding.value
+            },
+            // 指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+            componentUpdated() {
+
+            },
+            unbind() {
+                // 指令所在的元素（组件） 在销毁时调用
+                // 取消监听事件
+
+                // 指令的用途主要是做底层操作
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        new Vue({
+            el: "#root",
+            data() {
+                return {
+                    text: "2222"
+                }
+            },
+            methods: {
+                fn(event) {
+                    // alert(1)
+                    console.log(event)
+                }
+            },
+            template: `
+            <div class="app">
+                <input style="border:1px solid red" v-model="text" />
+                <input v-sync="text" />
+                <button v-listener:click="fn" v-listener:mousedown="fn">按钮</button>
+            </div>
+            `
+        })
+    
+    </script>
+</body>
+</html>

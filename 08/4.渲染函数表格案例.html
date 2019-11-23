@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>渲染函数</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./table.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+    new Vue({
+        el: "#root",
+        data() {
+            return {
+                colums: [
+                        {
+                            title: "账号",
+                            key: "username"
+                        },
+                        {
+                            title: "邮箱",
+                            key: "email",
+                            // iview的实现方式
+                            // render: (h, colum, data) => {
+                            //     // console.log(colum, data)
+                            //     return h("span", `我的邮箱 ${data.email}`);
+                            // }
+                        },
+                        {
+                            title: "操作",
+                            // render: (h) => {
+                            //     return h("div", [
+                            //         h("button", "按钮1"),
+                            //         h("button", "按钮2")
+                            //     ]);
+                            // }
+                        }
+                    ],
+                datas: [
+                        {
+                            username: "张三",
+                            email: "1@qq.com"
+                        },
+                        {
+                            username: "李四",
+                            email: "2@qq.com"
+                        }
+                    ]
+            }
+        },
+        template: `
+        <div class="app">
+            <Table 
+                :colums="colums" 
+                :datas="datas"
+            >
+                <template v-slot:th="colums">
+                    <th v-for="item in colums.colums">{{item.title}}</th>
+                </template>
+                // 饿了么的ui框架用的是插槽
+                <template v-slot:td="data">
+                    <td v-for="item in data.row">{{item}}</td>
+                </template>
+            </Table>
+        </div>
+        `
+    })
+    </script>
+</body>
+</html>
