@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        Vue.component("Test", {
+            // 组件上的prop如果没有接收该prop 则会显示在组件的根元素上
+            // 如果设置inheritAttrs 为true 则 显示未接收的prop在组件的根元素上
+            // 如果设置inheritAttrs 为false则 不会显示未接收的prop在组件的根元素上
+            // inheritAttrs选项不会影响到 style和class的叠加
+            inheritAttrs: false,
+            props: {
+                // index: String,
+            },
+            template: `
+            <div class="test">
+                <slot/>
+            </div>
+            `
+        })
+
+        // 如果直接在组件上编写样式 会直接叠加在组件的模板的根元素上
+        // class 和 style 不能作为组件的prop去传递的
+        // 在组件上编写其他属性会直接显示组件的根元素上
+        // 如果组件内部接收的该prop则不会显示
+        new Vue({
+            el: "#root",
+            template: `
+            <Test class="test" style="background: red" index="1">xxx</Test>
+            `
+        })
+    
+    </script>
+</body>
+</html>
