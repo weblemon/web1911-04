@@ -65,3 +65,60 @@ module.exports = {
     }
 }
 ```
+
+
+让模块支持.vue后缀名称的文件
+
+
+
+`cross-env` 模块用于捕获进程启动时的进程信息
+
+```shell
+npm i cross-env -D
+# or
+yarn add cross-env -D
+```
+
+
+提取css文件
+
+在开发时 css文件在js中
+在生产时 需要把css单独提取出来 提高网页的加载速度
+
+
+`mini-css-extract-plugin` 提取css文件
+```shell
+npm i mini-css-extract-plugin -D
+# or
+yarn add mini-css-extract-plugin -D
+```
+
+`optimize-css-assets-webpack-plugin`
+
+```shell
+yarn add optimize-css-assets-webpack-plugin -D 
+# or
+npm i yarn add optimize-css-assets-webpack-plugin -D
+```
+
+
+## 清理生产过的文件
+
+`clean-webpack-plugin`
+
+```shell
+npm i clean-webpack-plugin -D
+# or
+yarn add clean-webpack-plugin -D
+```
+
+
+## 打包分析
+
+`webpack-bundle-analyzer` 打包时查看文件的体积分布情况
+
+```shell
+yarn add webpack-bundle-analyzer -D
+# or
+npm i webpack-bundle-analyzer -D
+```
