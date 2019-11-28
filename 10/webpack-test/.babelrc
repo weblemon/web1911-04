@@ -1,4 +1,11 @@
 {
     "presets": ["@babel/preset-env"],
-    "plugins": ["@babel/plugin-transform-runtime"]
+    "plugins": [
+        // ["import", {
+        //     "libraryName": "view-design",
+        //     "libraryDirectory": "src/components"
+        //   }
+        // ],
+        "@babel/plugin-transform-runtime"
+    ]
 }

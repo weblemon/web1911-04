@@ -1,6 +1,13 @@
 import Vue from "vue";
-import App from "./App.vue";
-import "./style.less";
+import App from "./App";
+
+
+import ViewUI from "view-design";
+import 'view-design/dist/styles/iview.css';
+
+Vue.use(ViewUI);
+
+
 
 new Vue({
     // el: "#root",
