@@ -9,3 +9,5 @@ node_modules/
 # 02/1.txt
 
 # 02/*.txt
+
+.history/
