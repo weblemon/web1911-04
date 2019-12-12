@@ -8,9 +8,9 @@
             @after-enter="run('after-enter')"
             @enter-cancelled="run('enter-cancelled')"
 
-            @before-leave="run('before-leave')"
+            @before-leave="before"
             @leave="run('leave')"
-            @after-leave="run('after-leave')"
+            @after-leave="after"
             @leave-cancelled="run('leave-cancelled')"
         >
             <div
@@ -23,8 +23,8 @@
             </div>
         </transition-group>
 
-        <button @click="selectIndex--" class="btn prev">上一张</button>
-        <button @click="selectIndex++" class="btn next">下一张</button>
+        <button @click="play(selectIndex - 1)" class="btn prev">上一张</button>
+        <button @click="play(selectIndex + 1)" class="btn next">下一张</button>
         <div class="btn-group">
             <span
                 v-for="(item, index) in list"
@@ -32,7 +32,7 @@
                 :class="{
                     active: selectIndex === index
                 }"
-                @click="selectIndex = index"
+                @click="play(index)"
             >
             </span>
         </div>
@@ -50,8 +50,9 @@
                     "https://img13.360buyimg.com/da/s590x470_jfs/t18487/241/1444742474/110119/f5bc9082/5acb3af6N2af11d1c.jpg.webp"
                 ],
                 selectIndex: 0,
-                enter: "animated fadeInRight",
-                leave: "animated fadeOutLeft"
+                enter: "one fadeInRight",
+                leave: "one fadeOutLeft",
+                lock: false,
             }
         },
         watch: {
@@ -63,23 +64,39 @@
                 }
 
                 if (val > oldVal) {
-                    this.enter = "animated fadeInRight"
-                    this.leave = "animated fadeOutLeft"
+                    this.enter = "one fadeInRight"
+                    this.leave = "one fadeOutLeft"
                 } else if (val < oldVal) {
-                    this.enter = "animated fadeInLeft"
-                    this.leave = "animated fadeOutRight"
+                    this.enter = "one fadeInLeft"
+                    this.leave = "one fadeOutRight"
                 }
             }
         },
         methods: {
             run(a) {
-                // console.log(a)
+                console.log(a)
+            },
+            play(index) {
+                if (!this.lock) {
+                    this.selectIndex = index;
+                }
+            },
+            before() {
+                // console.log("locked")
+                this.lock = true;
+            },
+            after() {
+                // console.log("unlock")
+                this.lock = false;
             }
         }
     }
 </script>
 
 <style scoped>
+    .one {
+        animation-duration: 0.2s;
+    }
     .banner {
         width: 590px;
         height: 470px;

@@ -1,6 +1,7 @@
 <template>
     <div class="user">
         <Form @submit.native="handleSearch" class="tools" inline>
+        <!-- <Form class="tools" inline> -->
             <FormItem>
                 <Input clearable @on-clear="getUserList" v-model="username" class="input" search />
             </FormItem>

@@ -54,7 +54,6 @@
       </div>
       <div class="main">
         <div class="header">
-          {{userList}}
           <Button type="error" @click="logout">退出登录</Button>
         </div>  
         <div class="content">
